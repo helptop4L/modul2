@@ -1,0 +1,75 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class Student {
+    private String id;
+    private String name;
+
+    public Student(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    // Register for a course
+    public boolean registerForCourse(Course course) {
+        return course.addStudent(this);
+    }
+}
+
+public class Course {
+    private String code;
+    private String title;
+    private int capacity;
+    private Map<String, Student> enrolledStudents;
+
+    public Course(String code, String title, int capacity) {
+        this.code = code;
+        this.title = title;
+        this.capacity = capacity;
+        this.enrolledStudents = new HashMap<>();
+    }
+
+    // Attempt to add a student to the course
+    public boolean addStudent(Student student) {
+        if (enrolledStudents.size() < capacity) {
+            enrolledStudents.put(student.getId(), student);
+            return true;
+        } else {
+            return false; // Course is full
+        }
+    }
+
+    // Get remaining seats for the course
+    public int getAvailableSeats() {
+        return capacity - enrolledStudents.size();
+    }
+
+    // Getters and setters...
+}
+
+public class RegistrationSystem {
+    private Map<String, Course> courses;
+
+    public RegistrationSystem() {
+        this.courses = new HashMap<>();
+    }
+
+    // Method to register a student for a given course
+    public boolean registerStudentForCourse(String studentId, String courseId) {
+        Student student = getStudentById(studentId);
+        Course course = courses.get(courseId);
+
+        if (course != null && student != null) {
+            return course.addStudent(student);
+        }
+        return false;
+    }
+
+    // Method to get a student by ID
+    private Student getStudentById(String studentId) {
+        // Logic to retrieve a student by their ID
+        return null;
+    }
+
+    // Add courses, get courses, and other system methods...
+}
